@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 export class AppController {
     constructor(private readonly pingService: AppService) {}
 
-    @Get('ping')
+    @Get('ping') 
     async getPing() {
         return this.pingService.getPing();
     }
