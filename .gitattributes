@@ -1,1 +1,3 @@
 *.gitignore text eol=lf
+*.env.default text eol=lf
+eslint.config.mjs text eol=lf

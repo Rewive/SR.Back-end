@@ -1,10 +1,24 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { User, UserSchema } from './schemas';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+        }),
+        MongooseModule.forRoot(process.env.MONGODB_URL),
+        MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+        ThrottlerModule.forRoot([{
+            ttl: Number(process.env.TTL),
+            limit: Number(process.env.LIMIT),
+        }]),
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {}
