@@ -1,11 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
- 
+import { ValidationPipe } from '@nestjs/common';
+
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.setGlobalPrefix('api/v1');
+
+    // Настройка CORS
+    app.enableCors({
+        origin: 'https://user548334196-ukoybf2g.wormhole.vk-apps.com',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+    });
 
     const config = new DocumentBuilder()
         .setTitle('Social Rating API')
@@ -22,6 +30,8 @@ async function bootstrap() {
         res.removeHeader('x-powered-by');
         next();
     });
+
+    app.useGlobalPipes(new ValidationPipe());
 
     await app.listen(process.env.APP_PORT);
 }

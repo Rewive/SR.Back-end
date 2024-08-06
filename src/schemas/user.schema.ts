@@ -1,14 +1,63 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
- 
+
+class Country {
+  @Prop({ required: true })
+  id: number;
+
+  @Prop({ required: true })
+  title: string;
+}
+
 @Schema()
 export class User extends Document {
-    //Тут для примера
-    @Prop()
-    name: string;
+  @Prop({ required: true, unique: true })
+  uid: string;
 
-    @Prop()
-    email: string;
+  @Prop()
+  first_name: string;
+
+  @Prop()
+  last_name: string;
+
+  @Prop()
+  bdate: string;
+
+  @Prop()
+  bdate_visibility: number;
+
+  @Prop({ type: Country })
+  country: Country;
+
+  @Prop()
+  timezone: number;
+
+  @Prop()
+  photo_200: string;
+
+  @Prop()
+  photo_max_orig: string;
+
+  @Prop()
+  sex: number;
+
+  @Prop()
+  photo_100: string;
+
+  @Prop()
+  photo_base: string;
+
+  @Prop()
+  can_access_closed: boolean;
+
+  @Prop()
+  is_closed: boolean;
+
+  @Prop({ default: 0 })
+  voites: number;
+
+  @Prop({ default: 0 })
+  social_reting: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
