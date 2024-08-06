@@ -2,56 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '../schemas';
-import * as crypto from 'crypto';
+import { SignatureStrategy } from '../strategy';
+
+interface UserData {
+  id: string;
+  first_name: string;
+  last_name: string;
+  bdate?: string;
+  bdate_visibility?: number;
+  country?: string;
+  timezone?: number;
+  photo_200?: string;
+  photo_max_orig?: string;
+  sex?: number;
+  photo_100?: string;
+  photo_base?: string;
+  can_access_closed?: boolean;
+  is_closed?: boolean;
+}
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private readonly signatureStrategy: SignatureStrategy
+  ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async verifyLaunchParams(url: string): Promise<boolean> {
-    const parsedUrl = new URL(url);
-    const query = Object.fromEntries(parsedUrl.searchParams.entries());
-
-    let sign: string | undefined;
-    const queryParams: { key: string; value: string }[] = [];
-
-    for (const key in query) {
-      if (Object.prototype.hasOwnProperty.call(query, key)) {
-        if (key === 'sign') {
-          sign = query[key];
-        } else if (key.startsWith('vk_')) {
-          queryParams.push({ key, value: query[key] });
-        }
-      }
-    }
-
-    if (!sign || queryParams.length === 0) {
-      return false;
-    }
-
-    const queryString = queryParams
-      .sort((a, b) => a.key.localeCompare(b.key))
-      .reduce((acc, { key, value }, idx) => {
-        return acc + (idx === 0 ? '' : '&') + `${key}=${encodeURIComponent(value)}`;
-      }, '');
-
-    const paramsHash = crypto
-      .createHmac('sha256', process.env.VK_SECRET_KEY)
-      .update(queryString)
-      .digest('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=$/, '');
-
-    return paramsHash === sign;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async findOrCreateUser(userData: any): Promise<User> {
+  async findOrCreateUser(userData: UserData): Promise<User> {
     let user = await this.userModel.findOne({ uid: userData.id }).exec();
     if (!user) {
-        console.log("create dbn")
       user = new this.userModel({
         uid: userData.id,
         first_name: userData.first_name,
@@ -76,19 +55,27 @@ export class UserService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async handleUser(query: any, body: any): Promise<{ code: number; voites: number; social_reting: number; uid: string }> {
-    const isValid = await this.verifyLaunchParams(query);
+  async handleUser(query: any, body: unknown): Promise<{ code: number; voites: number; social_reting: number; uid: string }> {
+    const isValid = this.signatureStrategy.verifyLaunchParams(query);
     if (!isValid) {
       throw new Error('Invalid signature');
     }
 
-    const user = await this.findOrCreateUser(body);
+    if (this.isUserData(body)) {
+      const user = await this.findOrCreateUser(body);
 
-    return {
-      code: user ? 200 : 201,
-      voites: user.voites,
-      social_reting: user.social_reting,
-      uid: user.uid,
-    };
+      return {
+        code: user ? 200 : 201,
+        voites: user.voites,
+        social_reting: user.social_reting,
+        uid: user.uid,
+      };
+    } else {
+      throw new Error('Invalid user data');
+    }
+  }
+
+  private isUserData(data: unknown): data is UserData {
+    return typeof data === 'object' && data !== null && 'id' in data && 'first_name' in data && 'last_name' in data;
   }
 }
