@@ -1,7 +1,9 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { SocialRatingService } from './social-rating.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('social-rating')
+@ApiTags('Social Rating')
 export class SocialRatingController {
     constructor(private readonly socialRatingService: SocialRatingService) {
     }
