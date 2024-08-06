@@ -10,6 +10,8 @@ import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { SignatureStrategy } from './strategy';
 import { APP_GUARD } from '@nestjs/core';
+import { PostModule } from './post/post.module';
+import { SocialRatingModule } from './social-rating/social-rating.module';
 
 @Module({
     imports: [
@@ -17,14 +19,25 @@ import { APP_GUARD } from '@nestjs/core';
             isGlobal: true,
         }),
         MongooseModule.forRoot(process.env.MONGODB_URL),
-        MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+        MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
         ThrottlerModule.forRoot([{
             ttl: Number(process.env.TTL),
             limit: Number(process.env.LIMIT),
         }]),
         HttpModule,
+        PostModule,
+        SocialRatingModule,
     ],
-    controllers: [AppController, UserController], 
-    providers: [{ provide : APP_GUARD , useClass : ThrottlerGuard }, AppService, UserService, SignatureStrategy],
+    controllers: [
+        AppController,
+        UserController
+    ],
+    providers: [
+        {provide: APP_GUARD, useClass: ThrottlerGuard},
+        AppService,
+        UserService,
+        SignatureStrategy
+    ],
 })
-export class AppModule {}
+export class AppModule {
+}

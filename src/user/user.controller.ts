@@ -1,21 +1,63 @@
-import { Controller, Post, Req, Res, Body, UseGuards } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Req,
+    Res,
+    Body,
+    UseGuards,
+    BadRequestException,
+    Get,
+    Param,
+    HttpCode
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { Response, Request } from 'express';
-import { SignatureGuard } from '../guards';
+import { SignatureGuard } from '@/guards';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from '@/dto';
+import { HttpStatusCode } from 'axios';
 
-@Controller()
+@Controller('users')
+@UseGuards(SignatureGuard)
+@ApiTags('Users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
-
-  @Post('user')
-  @UseGuards(SignatureGuard)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async handleUser(@Req() req: Request, @Res() res: Response, @Body() body: any) {
-    try {
-      const result = await this.userService.handleUser(req.headers['authorization'], body);
-      return res.status(result.code).json(result);
-    } catch (error) {
-      return res.status(400).json({ message: error.message });
+    constructor(private readonly userService: UserService) {
     }
-  }
+
+    @Get()
+    async getAllUsers() {
+        return await this.userService.getAllUsers();
+    }
+
+    @Get('/:id')
+    async getUserById(
+        @Param('id') userId: string
+    ) {
+        return await this.userService.getUserById(userId);
+    }
+
+    @Post('create')
+    @HttpCode(HttpStatusCode.Created)
+    async createUser(
+        @Req() req: Request,
+        @Res() res: Response,
+        @Body() body: CreateUserDto
+    ) {
+        try {
+            const result = await this.userService.createUser(
+                body
+            );
+
+            return result;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Get(':id/get-friends')
+    async getFriends(
+        @Param('id') userId: number
+    ) {
+        return 'Get friends of user with id = ' + userId;
+    }
 }

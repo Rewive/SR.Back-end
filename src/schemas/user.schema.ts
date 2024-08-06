@@ -1,63 +1,71 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import {Document} from 'mongoose';
 
 class Country {
-  @Prop({ required: true })
-  id: number;
+    @Prop({required: true})
+    id: number;
 
-  @Prop({ required: true })
-  title: string;
+    @Prop({required: true})
+    title: string;
 }
 
 @Schema()
 export class User extends Document {
-  @Prop({ required: true, unique: true })
-  uid: string;
+    @Prop({required: true, unique: true})
+    uid: string;
 
-  @Prop()
-  first_name: string;
+    @Prop()
+    first_name: string;
 
-  @Prop()
-  last_name: string;
+    @Prop()
+    last_name: string;
 
-  @Prop()
-  bdate: string;
+    @Prop({default: 0})
+    votes: number;
 
-  @Prop()
-  bdate_visibility: number;
+    @Prop({default: 0})
+    social_rating: number;
 
-  @Prop({ type: Country })
-  country: Country;
+    @Prop({default: 0})
+    likes_count: number;
 
-  @Prop()
-  timezone: number;
+    @Prop({default: 0})
+    dislikes_count: number;
 
-  @Prop()
-  photo_200: string;
+    // ===== Vk user data =====
 
-  @Prop()
-  photo_max_orig: string;
+    @Prop()
+    bdate: string;
 
-  @Prop()
-  sex: number;
+    @Prop()
+    bdate_visibility: number;
 
-  @Prop()
-  photo_100: string;
+    @Prop({type: Country})
+    country: Country;
 
-  @Prop()
-  photo_base: string;
+    @Prop()
+    timezone: number;
 
-  @Prop()
-  can_access_closed: boolean;
+    @Prop()
+    photo_200: string;
 
-  @Prop()
-  is_closed: boolean;
+    @Prop()
+    photo_max_orig: string;
 
-  @Prop({ default: 0 })
-  voites: number;
+    @Prop()
+    sex: number;
 
-  @Prop({ default: 0 })
-  social_reting: number;
+    @Prop()
+    photo_100: string;
+
+    @Prop()
+    photo_base: string;
+
+    @Prop()
+    can_access_closed: boolean;
+
+    @Prop()
+    is_closed: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
