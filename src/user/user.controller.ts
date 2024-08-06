@@ -1,8 +1,6 @@
 import {
     Controller,
     Post,
-    Req,
-    Res,
     Body,
     UseGuards,
     BadRequestException,
@@ -11,7 +9,6 @@ import {
     HttpCode
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Response, Request } from 'express';
 import { SignatureGuard } from '@/guards';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '@/dto';
@@ -39,8 +36,6 @@ export class UserController {
     @Post('create')
     @HttpCode(HttpStatusCode.Created)
     async createUser(
-        @Req() req: Request,
-        @Res() res: Response,
         @Body() body: CreateUserDto
     ) {
         try {

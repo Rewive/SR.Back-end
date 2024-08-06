@@ -1,71 +1,79 @@
-import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Document} from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
 class Country {
-    @Prop({required: true})
-    id: number;
+  @Prop({ required: true })
+  id: number;
 
-    @Prop({required: true})
-    title: string;
+  @Prop({ required: true })
+  title: string;
+}
+
+class SocialRating {
+  @Prop({ default: 0 })
+  social_credits: number;
+
+  @Prop({ default: 0 })
+  likes_count: number;
+
+  @Prop({ default: 0 })
+  ignores_count: number;
+
+  @Prop({ default: 0 })
+  hates_count: number;
 }
 
 @Schema()
 export class User extends Document {
-    @Prop({required: true, unique: true})
-    uid: string;
+  @Prop({ required: true, unique: true })
+  uid: string;
 
-    @Prop()
-    first_name: string;
+  @Prop()
+  first_name: string;
 
-    @Prop()
-    last_name: string;
+  @Prop()
+  last_name: string;
 
-    @Prop({default: 0})
-    votes: number;
+  @Prop({ default: 0 })
+  votes: number;
 
-    @Prop({default: 0})
-    social_rating: number;
+  @Prop({ type: SocialRating, default: () => new SocialRating() })
+  social_rating: SocialRating;
 
-    @Prop({default: 0})
-    likes_count: number;
+  // ===== Vk user data =====
 
-    @Prop({default: 0})
-    dislikes_count: number;
+  @Prop()
+  bdate: string;
 
-    // ===== Vk user data =====
+  @Prop()
+  bdate_visibility: number;
 
-    @Prop()
-    bdate: string;
+  @Prop({ type: Country })
+  country: Country;
 
-    @Prop()
-    bdate_visibility: number;
+  @Prop()
+  timezone: number;
 
-    @Prop({type: Country})
-    country: Country;
+  @Prop()
+  photo_200: string;
 
-    @Prop()
-    timezone: number;
+  @Prop()
+  photo_max_orig: string;
 
-    @Prop()
-    photo_200: string;
+  @Prop()
+  sex: number;
 
-    @Prop()
-    photo_max_orig: string;
+  @Prop()
+  photo_100: string;
 
-    @Prop()
-    sex: number;
+  @Prop()
+  photo_base: string;
 
-    @Prop()
-    photo_100: string;
+  @Prop()
+  can_access_closed: boolean;
 
-    @Prop()
-    photo_base: string;
-
-    @Prop()
-    can_access_closed: boolean;
-
-    @Prop()
-    is_closed: boolean;
+  @Prop()
+  is_closed: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
