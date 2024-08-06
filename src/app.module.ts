@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { HttpModule } from '@nestjs/axios';
 import { User, UserSchema } from './schemas';
 import { AppController } from '@/app.controller';
@@ -9,6 +9,7 @@ import { AppService } from '@/app.service';
 import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { SignatureStrategy } from './strategy';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -24,6 +25,6 @@ import { SignatureStrategy } from './strategy';
         HttpModule,
     ],
     controllers: [AppController, UserController], 
-    providers: [AppService, UserService, SignatureStrategy],
+    providers: [{ provide : APP_GUARD , useClass : ThrottlerGuard }, AppService, UserService, SignatureStrategy],
 })
 export class AppModule {}
