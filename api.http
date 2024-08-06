@@ -1,0 +1,28 @@
+### POST User Data
+POST http://localhost:3000/api/v1/users/create
+Content-Type: application/json;charset=utf-8
+Authorization: https://user548334196-t2xoaz4h.wormhole.vk-apps.com/?vk_access_token_settings=&vk_app_id=7444136&vk_are_notifications_enabled=0&vk_is_app_user=0&vk_is_favorite=0&vk_language=ru&vk_platform=desktop_web&vk_ref=other&vk_ts=1722966536&vk_user_id=261429253&sign=6kT95uW1fDqvFCKfZFWjWCG7YdN1z7V7zdNoBJzGrws
+
+{
+    "id": 261429253,
+    "bdate": "6.12.2005",
+    "bdate_visibility": 1,
+    "city": {
+        "id": 1087352,
+        "title": "Бакланово"
+    },
+    "country": {
+        "id": 1,
+        "title": "Россия"
+    },
+    "timezone": 3,
+    "photo_200": "https://sun136-2.userapi.com/s/v1/ig2/ofgDlynUrimL8dwBiMWht1ZgswJ8BDn1e_7zah_1vwXSv8K9lVbFQvaBTAATAL-C7Wz2kYQUEVJiufRQdTNW0Ika.jpg?quality=95&crop=0,508,1152,1152&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080&ava=1&u=Whoc9B6S_nVpJwsun_XOqP-qBiIMhCiU8jhMsm1FDp8&cs=200x200",
+    "photo_max_orig": "https://sun136-2.userapi.com/s/v1/ig2/Bo-cSKlYVLyaaHTb65m3ICr7qBCATEQNDurBRQjt9DlhuY0mvu5LrvUm8xo5BRfby8u0GeQB6bLVzR-riOwXc_eI.jpg?size=400x400&quality=95&crop=0,508,1152,1152&ava=1",
+    "sex": 2,
+    "photo_100": "https://sun136-2.userapi.com/s/v1/ig2/ofgDlynUrimL8dwBiMWht1ZgswJ8BDn1e_7zah_1vwXSv8K9lVbFQvaBTAATAL-C7Wz2kYQUEVJiufRQdTNW0Ika.jpg?quality=95&crop=0,508,1152,1152&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080&ava=1&u=Whoc9B6S_nVpJwsun_XOqP-qBiIMhCiU8jhMsm1FDp8&cs=100x100",
+    "photo_base": "https://sun136-2.userapi.com/s/v1/ig2/ofgDlynUrimL8dwBiMWht1ZgswJ8BDn1e_7zah_1vwXSv8K9lVbFQvaBTAATAL-C7Wz2kYQUEVJiufRQdTNW0Ika.jpg?quality=95&crop=0,508,1152,1152&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080&ava=1&u=Whoc9B6S_nVpJwsun_XOqP-qBiIMhCiU8jhMsm1FDp8",
+    "first_name": "Vlad",
+    "last_name": "Rogov",
+    "can_access_closed": true,
+    "is_closed": false
+}
