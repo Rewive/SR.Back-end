@@ -1,12 +1,12 @@
 services:
-  social-rating-app:
+  social-rating-app-prod:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
-      - 3000:3000
+      - 3001:3001
     environment:
-      env_file: .env
+      env_file: .env.production
     volumes:
       - ./src:/app/src
     depends_on:

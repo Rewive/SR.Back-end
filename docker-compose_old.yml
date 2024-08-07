@@ -1,27 +1,40 @@
 services:
-  social-rating-app:
+  dev:
+    container_name: server-dev
+    image: server-dev:1.0.0
     build:
       context: .
-      dockerfile: Dockerfile
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:debug
     ports:
       - 3000:3000
-    environment:
-      env_file: .env
+      # - 9229:9229
+    networks:
+      - server-network
     volumes:
-      - ./src:/app/src
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
     depends_on:
       - mongodb
 
   mongodb:
     image: mongo:7.0.7
+    container_name: server-mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: social-rating
       MONGO_INITDB_ROOT_PASSWORD: asDJHCj387811js69hu3827HWQUhkj2
+    networks:
+      - server-network
     ports:
       - 27017:27017
-    restart: always
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
       interval: 30s
       timeout: 10s
       retries: 3
+    restart: unless-stopped
+
+networks:
+  server-network:
