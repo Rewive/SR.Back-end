@@ -22,17 +22,16 @@
     ```bash
     mv .env.default .env
     ```
-   
-    Для production версии создайте .env.production
+
 
 4. Соберите и запустите контейнеры в режиме разработки (порт приложения: 3000):
     ```bash
-    docker-compose up --build
+    docker-compose up dev
     ```
    
-    Для production версии запустите (порт приложения: 3001)
+    Для production версии запустите (порт приложения: 3000)
     ```bash
-    docker-compose -f docker-compose.prod.yml up --build
+    docker-compose up prod
     ```
 
 3. Откройте браузер и перейдите по адресу:
