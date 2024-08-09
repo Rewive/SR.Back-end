@@ -5,12 +5,10 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User, UserSchema } from '@/schemas';
 import { SignatureStrategy } from '@/strategy';
-import { ReferralSystemModule } from '@/referral-system/referral-system.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
-        ReferralSystemModule
     ],
     controllers: [UserController],
     providers: [

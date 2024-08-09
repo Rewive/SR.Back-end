@@ -43,11 +43,11 @@ export class User extends Document {
 
     // Referrals
     // List of invited users
-    @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-    referrals: Types.ObjectId[];
+    @Prop({ type: [Types.ObjectId], ref: User.name })
+    referrals: User[];
 
     // Who invited the user
-    @Prop({ type: Types.ObjectId, ref: 'User', required: false })
+    @Prop({ type: [Types.ObjectId], ref: User.name, default: null })
     referrer: User;
 
     // ===== Vk user data =====

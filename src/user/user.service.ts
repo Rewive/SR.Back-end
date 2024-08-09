@@ -2,17 +2,11 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '@/schemas';
-import { SignatureStrategy } from '@/strategy';
-import { CreateUserDto } from '@/dto';
-import { ReferralSystemService } from '@/referral-system/referral-system.service';
 
 @Injectable()
 export class UserService {
     constructor(
-        private readonly referralSystemService: ReferralSystemService,
-
         @InjectModel(User.name) private userModel: Model<User>,
-        private readonly signatureStrategy: SignatureStrategy,
     ) {
     }
 
@@ -36,61 +30,11 @@ export class UserService {
             })
             .exec();
 
-        if(!user) {
-            throw new NotFoundException(`User with id ${userId} not found`);
-        }
+        // if(!user) {
+        //     throw new NotFoundException(`User with id ${userId} not found`);
+        // }
 
         return user;
-    }
-
-    /**
-     * Create new user.
-     * If the user already exists - return it.
-     *
-     * @param userDto
-     */
-    async createUser(userDto: CreateUserDto): Promise<{
-        status: number;
-        votes: number;
-        social_rating: {
-            social_credits: number;
-            likes_count: number;
-            ignores_count: number;
-            hates_count: number;
-        };
-        uid: string;
-    }> {
-        let user = await this.getUserById(userDto.id);
-
-        // Create user
-        if (!user) {
-            user = new this.userModel({
-                ...userDto,
-                uid: userDto.id,
-                social_rating: {
-                    social_credits: 0,
-                    likes_count: 0,
-                    ignores_count: 0,
-                    hates_count: 0,
-                },
-                votes: 0,
-            });
-
-            await user.save();
-
-            // Check if it's a referral
-            this.referralSystemService.addReferral(
-                userDto.referrer_id,
-                user.uid
-            );
-        }
-
-        return {
-            status: 201,
-            votes: user.votes,
-            social_rating: user.social_rating,
-            uid: user.uid,
-        };
     }
 
     /**

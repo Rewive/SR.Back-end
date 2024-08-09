@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ReferralSystemService } from './referral-system.service';
 import { ReferralSystemController } from './referral-system.controller';
-import { UserModule } from '@/user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@/schemas';
+import { SignatureStrategy } from '@/strategy';
+import { UserModule } from '@/user/user.module';
 
 @Module({
     imports: [
@@ -13,7 +14,10 @@ import { User, UserSchema } from '@/schemas';
         UserModule
     ],
     controllers: [ReferralSystemController],
-    providers: [ReferralSystemService],
+    providers: [
+        ReferralSystemService,
+        SignatureStrategy
+    ],
     exports: [ReferralSystemService]
 })
 export class ReferralSystemModule {

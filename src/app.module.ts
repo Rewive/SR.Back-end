@@ -10,6 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { SocialRatingModule } from './social-rating/social-rating.module';
 import { ReferralSystemModule } from './referral-system/referral-system.module';
 import { UserModule } from '@/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -27,6 +28,7 @@ import { UserModule } from '@/user/user.module';
         UserModule,
         SocialRatingModule,
         ReferralSystemModule,
+        AuthModule,
     ],
     controllers: [
         AppController
