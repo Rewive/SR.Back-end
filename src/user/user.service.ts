@@ -24,17 +24,7 @@ export class UserService {
      * @param userId
      */
     async getUserById(userId: string): Promise<User> {
-        const user = await this.userModel
-            .findOne({
-                uid: userId,
-            })
-            .exec();
-
-        // if(!user) {
-        //     throw new NotFoundException(`User with id ${userId} not found`);
-        // }
-
-        return user;
+        return await this.userModel.findOne({ uid: userId }).exec();
     }
 
     /**

@@ -11,7 +11,7 @@ async function bootstrap() {
 
     // CORS setup
     app.enableCors({
-        origin: 'https://user548334196-t2xoaz4h.wormhole.vk-apps.com',
+        origin: 'https://user548334196-z6lcglh7.wormhole.vk-apps.com',
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
     });
