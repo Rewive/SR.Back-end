@@ -15,13 +15,13 @@ export class ReferralSystemController {
 
     @Get('/:userId')
     async addReferral(
-        @Param('userId') referralId: string,
-        @GetVkUserId() vkUserId: string
+        @Param('userId') vkUserId: string,
+        @GetVkUserId() referralId: string
     ) {
 
-        const user = this.userService.getUserById(vkUserId);
-        return user;
-
-        // return await this.referralSystemService.addReferral();
+        return await this.referralSystemService.addReferral(
+            vkUserId,
+            referralId
+        );
     }
 }

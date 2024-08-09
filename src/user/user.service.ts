@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '@/schemas';
@@ -32,6 +32,12 @@ export class UserService {
                 uid: userId,
             })
             .exec();
+
+        console.log(userId);
+
+        if(!user) {
+            throw new NotFoundException('Such user not found');
+        }
 
         return user;
     }
@@ -78,5 +84,27 @@ export class UserService {
             social_rating: user.social_rating,
             uid: user.uid,
         };
+    }
+
+    /**
+     * Update user's votes count
+     * @param vkUserId - user id to change votes
+     * @param count - difference of votes (can be negative number)
+     */
+    async changeVotesCount(
+        vkUserId: string,
+        count: number
+    ): Promise<User> {
+        const user = await this.getUserById(vkUserId);
+
+        // Change user votes count
+        user.votes += count;
+
+        // Check if the user have enough votes
+        if(user.votes < 0) {
+            throw new ForbiddenException('You have not enough votes');
+        }
+
+        return user.save();
     }
 }
