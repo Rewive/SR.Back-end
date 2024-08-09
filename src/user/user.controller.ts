@@ -48,11 +48,4 @@ export class UserController {
             throw new BadRequestException(error.message);
         }
     }
-
-    @Get(':id/get-friends')
-    async getFriends(
-        @Param('id') userId: number
-    ) {
-        return 'Get friends of user with id = ' + userId;
-    }
 }
