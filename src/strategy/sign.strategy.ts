@@ -10,7 +10,7 @@ export class SignatureStrategy {
 
             let sign: string | undefined;
             const queryParams: { key: string; value: string }[] = [];
-
+ 
             for (const key in query) {
                 if (Object.prototype.hasOwnProperty.call(query, key)) {
                     if (key === 'sign') {

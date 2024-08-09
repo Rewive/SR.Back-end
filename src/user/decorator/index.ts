@@ -1,0 +1,1 @@
+export * from './get-vk-user-id.decorator';

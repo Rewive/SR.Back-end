@@ -10,8 +10,9 @@ import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { SignatureStrategy } from './strategy';
 import { APP_GUARD } from '@nestjs/core';
-import { PostModule } from './post/post.module';
 import { SocialRatingModule } from './social-rating/social-rating.module';
+import { ReferralSystemModule } from './referral-system/referral-system.module';
+import { UserModule } from '@/user/user.module';
 
 @Module({
     imports: [
@@ -25,18 +26,17 @@ import { SocialRatingModule } from './social-rating/social-rating.module';
             limit: Number(process.env.LIMIT),
         }]),
         HttpModule,
-        PostModule,
+        // -----------
+        UserModule,
         SocialRatingModule,
+        ReferralSystemModule,
     ],
     controllers: [
-        AppController,
-        UserController
+        AppController
     ],
     providers: [
         {provide: APP_GUARD, useClass: ThrottlerGuard},
         AppService,
-        UserService,
-        SignatureStrategy
     ],
 })
 export class AppModule {

@@ -14,7 +14,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '@/dto';
 import { HttpStatusCode } from 'axios';
 
-@Controller('user')
+@Controller('users')
 @UseGuards(SignatureGuard)
 @ApiTags('Users')
 export class UserController {
