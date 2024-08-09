@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 class Country {
     @Prop({required: true})
@@ -37,8 +37,18 @@ export class User extends Document {
     @Prop({default: 0})
     votes: number;
 
+    // Social rating object
     @Prop({type: SocialRating, default: () => new SocialRating()})
     social_rating: SocialRating;
+
+    // Referrals
+    // List of invited users
+    @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
+    referrals: Types.ObjectId[];
+
+    // Who invited the user
+    @Prop({ type: Types.ObjectId, ref: 'User', required: false })
+    referrer: User;
 
     // ===== Vk user data =====
 

@@ -17,6 +17,13 @@ export class CreateUserDto {
     @ApiProperty()
     last_name: string;
 
+    @IsNumber()
+    @IsOptional()
+    @ApiPropertyOptional()
+    referrer_id?: string;
+
+    // Vk user data
+
     @IsString()
     @IsOptional()
     @ApiPropertyOptional()

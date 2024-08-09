@@ -4,10 +4,13 @@ import { Model } from 'mongoose';
 import { User } from '@/schemas';
 import { SignatureStrategy } from '@/strategy';
 import { CreateUserDto } from '@/dto';
+import { ReferralSystemService } from '@/referral-system/referral-system.service';
 
 @Injectable()
 export class UserService {
     constructor(
+        private readonly referralSystemService: ReferralSystemService,
+
         @InjectModel(User.name) private userModel: Model<User>,
         private readonly signatureStrategy: SignatureStrategy,
     ) {
@@ -33,10 +36,8 @@ export class UserService {
             })
             .exec();
 
-        console.log(userId);
-
         if(!user) {
-            throw new NotFoundException('Such user not found');
+            throw new NotFoundException(`User with id ${userId} not found`);
         }
 
         return user;
@@ -76,6 +77,12 @@ export class UserService {
             });
 
             await user.save();
+
+            // Check if it's a referral
+            this.referralSystemService.addReferral(
+                userDto.referrer_id,
+                user.uid
+            );
         }
 
         return {
@@ -106,5 +113,12 @@ export class UserService {
         }
 
         return user.save();
+    }
+
+    async getUserReferrals(
+        vkUserId: string
+    ) {
+        const user = await this.getUserById(vkUserId);
+        return user.referrals;
     }
 }
