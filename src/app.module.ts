@@ -8,9 +8,8 @@ import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
-import { SignatureStrategy } from './strategy';
+import { SignatureStrategy } from './common';
 import { APP_GUARD } from '@nestjs/core';
-import { PostModule } from './post/post.module';
 import { SocialRatingModule } from './social-rating/social-rating.module';
 
 @Module({
@@ -25,7 +24,6 @@ import { SocialRatingModule } from './social-rating/social-rating.module';
             limit: Number(process.env.LIMIT),
         }]),
         HttpModule,
-        PostModule,
         SocialRatingModule,
     ],
     controllers: [
