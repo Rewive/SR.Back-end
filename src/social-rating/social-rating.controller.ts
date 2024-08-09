@@ -1,31 +1,43 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { SocialRatingService } from './social-rating.service';
 import { ApiTags } from '@nestjs/swagger';
+import { GetVkUserId } from '@/user/decorator';
 
 @Controller('social-rating')
 @ApiTags('Social Rating')
 export class SocialRatingController {
-    constructor(private readonly socialRatingService: SocialRatingService) {
+    constructor(
+        private readonly socialRatingService: SocialRatingService,) {
     }
 
-    @Get(':userId')
+    @Get(':targetUserId')
     getSocialRating(
-        @Param('userId') userId: string
+        @Param('targetUserId') targetUserId: string
     ) {
-        return this.socialRatingService.getSocialRatingByUserId(userId);
+        return this.socialRatingService.getSocialRatingByUserId(targetUserId);
     }
 
-    @Post(':userId/like')
+    @Post(':targetUserId/like')
     like(
-        @Param('userId') userId: string
+        @GetVkUserId() userId: string,
+        @Param('targetUserId') targetUserId: string,
     ) {
-        return this.socialRatingService.likeByUserId(userId);
+        return this.socialRatingService.like(userId, targetUserId);
     }
 
-    @Post(':userId/dislike')
-    dislike(
-        @Param('userId') userId: string
+    @Post(':targetUserId/hate')
+    hate(
+        @GetVkUserId() userId: string,
+        @Param('targetUserId') targetUserId: string,
     ) {
-        return this.socialRatingService.dislikeByUserId(userId);
+        return this.socialRatingService.hate(userId, targetUserId);
+    }
+
+    @Post(':targetUserId/ignore')
+    ignore(
+        @GetVkUserId() userId: string,
+        @Param('targetUserId') targetUserId: string,
+    ) {
+        return this.socialRatingService.ignore(userId, targetUserId);
     }
 }

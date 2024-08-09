@@ -26,7 +26,7 @@ export class AuthService {
         status: number;
         votes: number;
         social_rating: {
-            social_credits: number;
+            total: number;
             likes_count: number;
             ignores_count: number;
             hates_count: number;
@@ -41,7 +41,7 @@ export class AuthService {
                 ...userDto,
                 uid: userDto.id,
                 social_rating: {
-                    social_credits: 0,
+                    total: 0,
                     likes_count: 0,
                     ignores_count: 0,
                     hates_count: 0,

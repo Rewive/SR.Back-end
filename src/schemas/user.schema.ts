@@ -11,7 +11,7 @@ class Country {
 
 class SocialRating {
     @Prop({default: 0})
-    social_credits: number;
+    total: number;
 
     @Prop({default: 0})
     likes_count: number;
@@ -38,7 +38,10 @@ export class User extends Document {
     votes: number;
 
     // Social rating object
-    @Prop({type: SocialRating, default: () => new SocialRating()})
+    @Prop({
+        type: SocialRating,
+        default: () => new SocialRating()
+    })
     social_rating: SocialRating;
 
     // Referrals
@@ -87,3 +90,9 @@ export class User extends Document {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+// // Middleware to auto-calculate social_rating.total
+// UserSchema.pre<User>('save', function (next) {
+//     this.social_rating.total = this.social_rating.likes_count - this.social_rating.hates_count;
+//     next();
+// });
