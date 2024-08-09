@@ -9,6 +9,8 @@ import { AppService } from '@/app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { SocialRatingModule } from './social-rating/social-rating.module';
 import { UserModule } from '@/user/user.module';
+import { ReferralSystemModule } from '@/referral-system/referral-system.module';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
     imports: [

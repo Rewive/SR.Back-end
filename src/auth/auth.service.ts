@@ -3,7 +3,6 @@ import { ReferralSystemService } from '@/referral-system/referral-system.service
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@/schemas';
 import { Model } from 'mongoose';
-import { SignatureStrategy } from '@/strategy';
 import { CreateUserDto } from '@/dto';
 import { UserService } from '@/user/user.service';
 
