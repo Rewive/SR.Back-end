@@ -17,7 +17,7 @@
     ],
     "rules": {
         "indent": ["error", 4, { "ignoredNodes": ["PropertyDefinition"] }],
-        "linebreak-style": ["error", "unix"],
+//        "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],

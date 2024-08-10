@@ -19,7 +19,7 @@ export class SocialRatingService {
     }
 
     async like(userId: string, targetUserId: string) {
-        if(userId == targetUserId) {
+        if (userId == targetUserId) {
             throw new ForbiddenException('Cannot like yourself');
         }
 
@@ -28,15 +28,15 @@ export class SocialRatingService {
 
         // Increase target user's likes count
         await this.userModel.updateOne(
-            {uid: targetUserId},
-            {$inc: {'social_rating.likes_count': 1}}
+            { uid: targetUserId },
+            { $inc: { 'social_rating.likes_count': 1 } }
         ).exec();
 
         return 0;
     }
 
     async hate(userId: string, targetUserId: string) {
-        if(userId == targetUserId) {
+        if (userId == targetUserId) {
             throw new ForbiddenException('Don\'t hate yourself, you are the best!');
         }
 
@@ -45,22 +45,22 @@ export class SocialRatingService {
 
         // Increase target user's hates count
         await this.userModel.updateOne(
-            {uid: targetUserId},
-            {$inc: {'social_rating.hates_count': 1}}
+            { uid: targetUserId },
+            { $inc: { 'social_rating.hates_count': 1 } }
         ).exec();
 
         return 0;
     }
 
     async ignore(userId: string, targetUserId: string) {
-        if(userId == targetUserId) {
+        if (userId == targetUserId) {
             throw new ForbiddenException('Cannot ignore yourself');
         }
 
         // Increase target user's ignores count
         await this.userModel.updateOne(
-            {uid: targetUserId},
-            {$inc: {'social_rating.ignores_count': 1}}
+            { uid: targetUserId },
+            { $inc: { 'social_rating.ignores_count': 1 } }
         ).exec();
 
         return 0;
