@@ -7,7 +7,7 @@ export class AppService {
         const start = Date.now();
         try {
             if (mongoose.connection.readyState !== 1) {
-                await mongoose.connect(process.env.MONGODB_URL)
+                await mongoose.connect(process.env.MONGODB_URL);
             }
 
             const dbStart = Date.now();

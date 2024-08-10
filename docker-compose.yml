@@ -13,8 +13,8 @@ services:
     networks:
       - server-network
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - .:/newfolder
+      - /newfolder/node_modules
     restart: unless-stopped
     depends_on:
       - mongodb

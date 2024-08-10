@@ -1,14 +1,101 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+
+class Country {
+    @Prop({required: true})
+    id: number;
+
+    @Prop({required: true})
+    title: string;
+}
+
+class SocialRating {
+    @Prop({default: 0})
+    total: number;
+
+    @Prop({default: 0})
+    likes_count: number;
+
+    @Prop({default: 0})
+    ignores_count: number;
+
+    @Prop({default: 0})
+    hates_count: number;
+}
 
 @Schema()
 export class User extends Document {
-    //Тут для примера
-    @Prop()
-    name: string;
+    @Prop({required: true, unique: true})
+    uid: string;
 
     @Prop()
-    email: string;
+    first_name: string;
+
+    @Prop()
+    last_name: string;
+
+    @Prop({default: 0})
+    votes: number;
+
+    // Social rating object
+    @Prop({
+        type: SocialRating,
+        default: () => new SocialRating()
+    })
+    social_rating: SocialRating;
+
+    @Prop({default: true})
+    show_in_leaderboard: boolean;
+
+    // Referrals
+    // List of invited users
+    @Prop({ type: [Types.ObjectId], ref: User.name })
+    referrals: User[];
+
+    // Who invited the user
+    @Prop({ type: [Types.ObjectId], ref: User.name, default: null })
+    referrer: User;
+
+    // ===== Vk user data =====
+
+    @Prop()
+    bdate: string;
+
+    @Prop()
+    bdate_visibility: number;
+
+    @Prop({type: Country})
+    country: Country;
+
+    @Prop()
+    timezone: number;
+
+    @Prop()
+    photo_200: string;
+
+    @Prop()
+    photo_max_orig: string;
+
+    @Prop()
+    sex: number;
+
+    @Prop()
+    photo_100: string;
+
+    @Prop()
+    photo_base: string;
+
+    @Prop()
+    can_access_closed: boolean;
+
+    @Prop()
+    is_closed: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+// // Middleware to auto-calculate social_rating.total
+// UserSchema.pre<User>('save', function (next) {
+//     this.social_rating.total = this.social_rating.likes_count - this.social_rating.hates_count;
+//     next();
+// });
