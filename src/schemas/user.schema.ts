@@ -44,6 +44,9 @@ export class User extends Document {
     })
     social_rating: SocialRating;
 
+    @Prop({default: true})
+    show_in_leaderboard: boolean;
+
     // Referrals
     // List of invited users
     @Prop({ type: [Types.ObjectId], ref: User.name })

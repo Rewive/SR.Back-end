@@ -55,4 +55,16 @@ export class UserService {
         const user = await this.getUserById(vkUserId);
         return user.referrals;
     }
+
+    /**
+     * Set user.show_in_leaderboard = visibility
+     * @param vkUserId
+     * @param visibility
+     */
+    async changeUserLeaderboardVisibility(vkUserId: string, visibility: boolean) {
+        const user = await this.getUserById(vkUserId);
+        user.show_in_leaderboard = visibility;
+        return user.save();
+
+    }
 }

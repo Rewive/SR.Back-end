@@ -11,6 +11,7 @@ import { SocialRatingModule } from './social-rating/social-rating.module';
 import { UserModule } from '@/user/user.module';
 import { ReferralSystemModule } from '@/referral-system/referral-system.module';
 import { AuthModule } from '@/auth/auth.module';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import { AuthModule } from '@/auth/auth.module';
         SocialRatingModule,
         ReferralSystemModule,
         AuthModule,
+        LeaderboardModule,
     ],
     controllers: [
         AppController

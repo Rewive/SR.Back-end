@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { SocialRatingService } from './social-rating.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetVkUserId } from '@/user/decorator';
 
 @Controller('social-rating')
@@ -11,6 +11,7 @@ export class SocialRatingController {
     }
 
     @Get(':targetUserId')
+    @ApiOperation({ summary: 'Return social rating object (total, likes, hates, ignores) of the user' })
     getSocialRating(
         @Param('targetUserId') targetUserId: string
     ) {
@@ -18,6 +19,7 @@ export class SocialRatingController {
     }
 
     @Post(':targetUserId/like')
+    @ApiOperation({ summary: 'Increase likes count for target user' })
     like(
         @GetVkUserId() userId: string,
         @Param('targetUserId') targetUserId: string,
@@ -26,6 +28,7 @@ export class SocialRatingController {
     }
 
     @Post(':targetUserId/hate')
+    @ApiOperation({ summary: 'Increase hates count for target user' })
     hate(
         @GetVkUserId() userId: string,
         @Param('targetUserId') targetUserId: string,
@@ -34,6 +37,7 @@ export class SocialRatingController {
     }
 
     @Post(':targetUserId/ignore')
+    @ApiOperation({ summary: 'Increase ignores for target user' })
     ignore(
         @GetVkUserId() userId: string,
         @Param('targetUserId') targetUserId: string,
