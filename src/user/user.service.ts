@@ -41,9 +41,9 @@ export class UserService {
         // Change user votes count
         user.votes += count;
 
-        // Check if the user have enough votes
+        // Check if the user has enough votes
         if (user.votes < 0) {
-            throw new ForbiddenException('You have not enough votes');
+            throw new ForbiddenException('У вас недостаточно голосов. Приглашайте друзей, чтобы получить больше');
         }
 
         return user.save();

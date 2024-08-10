@@ -20,7 +20,7 @@ export class SocialRatingService {
 
     async like(userId: string, targetUserId: string) {
         if (userId == targetUserId) {
-            throw new ForbiddenException('Cannot like yourself');
+            throw new ForbiddenException('Самолайк залог успеха, но Вы не можете оценивать сами себя');
         }
 
         // Decrease user's votes count
@@ -29,7 +29,12 @@ export class SocialRatingService {
         // Increase target user's likes count
         await this.userModel.updateOne(
             { uid: targetUserId },
-            { $inc: { 'social_rating.likes_count': 1 } }
+            {
+                $inc: {
+                    'social_rating.total'      : 1,
+                    'social_rating.likes_count': 1
+                }
+            }
         ).exec();
 
         return 0;
@@ -37,7 +42,7 @@ export class SocialRatingService {
 
     async hate(userId: string, targetUserId: string) {
         if (userId == targetUserId) {
-            throw new ForbiddenException('Don\'t hate yourself, you are the best!');
+            throw new ForbiddenException('Не нужно оценивать себя негативно, Вы прекрасны');
         }
 
         // Decrease user's votes count
@@ -46,7 +51,12 @@ export class SocialRatingService {
         // Increase target user's hates count
         await this.userModel.updateOne(
             { uid: targetUserId },
-            { $inc: { 'social_rating.hates_count': 1 } }
+            {
+                $inc: {
+                    'social_rating.total'      : -1,
+                    'social_rating.hates_count': 1
+                }
+            }
         ).exec();
 
         return 0;
@@ -54,13 +64,17 @@ export class SocialRatingService {
 
     async ignore(userId: string, targetUserId: string) {
         if (userId == targetUserId) {
-            throw new ForbiddenException('Cannot ignore yourself');
+            throw new ForbiddenException('Вы не можете игнорировать сами себя');
         }
 
         // Increase target user's ignores count
         await this.userModel.updateOne(
             { uid: targetUserId },
-            { $inc: { 'social_rating.ignores_count': 1 } }
+            {
+                $inc: {
+                    'social_rating.ignores_count': 1
+                }
+            }
         ).exec();
 
         return 0;
