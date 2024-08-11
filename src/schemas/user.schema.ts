@@ -34,8 +34,13 @@ export class User extends Document {
     @Prop()
     last_name: string;
 
+    // Votes
     @Prop({default: 0})
     votes: number;
+
+    // List of users that have been rated by this user
+    @Prop({ type: [Types.ObjectId], ref: User.name, default: [] })
+    voted_for: User[];
 
     // Social rating object
     @Prop({
