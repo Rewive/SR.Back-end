@@ -35,7 +35,7 @@ export class User extends Document {
     last_name: string;
 
     // Votes
-    @Prop({default: 0})
+    @Prop({default: 10})
     votes: number;
 
     // List of users that have been rated by this user
