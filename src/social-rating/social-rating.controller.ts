@@ -19,7 +19,7 @@ export class SocialRatingController {
     }
 
     @Post(':targetUserId/like')
-    @ApiOperation({ summary: 'Increase likes count for target user' })
+    @ApiOperation({ summary: 'Increase likes count for target user, return the next user in the feed.' })
     like(
         @GetVkUserId() userId: string,
         @Param('targetUserId') targetUserId: string,
@@ -28,7 +28,7 @@ export class SocialRatingController {
     }
 
     @Post(':targetUserId/hate')
-    @ApiOperation({ summary: 'Increase hates count for target user' })
+    @ApiOperation({ summary: 'Increase hates count for target user, return the next user in the feed.' })
     hate(
         @GetVkUserId() userId: string,
         @Param('targetUserId') targetUserId: string,
@@ -37,7 +37,7 @@ export class SocialRatingController {
     }
 
     @Post(':targetUserId/ignore')
-    @ApiOperation({ summary: 'Increase ignores for target user' })
+    @ApiOperation({ summary: 'Increase ignores for target user, return the next user in the feed.' })
     ignore(
         @GetVkUserId() userId: string,
         @Param('targetUserId') targetUserId: string,

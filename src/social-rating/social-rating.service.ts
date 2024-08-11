@@ -2,12 +2,14 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UserService } from '@/user/user.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@/schemas';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
+import { FeedService } from '@/feed/feed.service';
 
 @Injectable()
 export class SocialRatingService {
     constructor(
         private readonly userService: UserService,
+        private readonly feedService: FeedService,
         @InjectModel(User.name) private userModel: Model<User>,
     ) {
     }
@@ -34,6 +36,14 @@ export class SocialRatingService {
         return !!user;
     }
 
+    /**
+     * Add targetUser to voted_for list.
+     * Then this targetUser won't be shown in the feed.
+     *
+     * @param userId
+     * @param targetUserId
+     * @private
+     */
     private async hasVotedFor(userId: string, targetUserId: string) {
         await this.userModel.updateOne(
             {uid: userId},
@@ -42,12 +52,12 @@ export class SocialRatingService {
     }
 
     async like(userId: string, targetUserId: string) {
-        // Can't rate yourself
+        // Can't rate yourself.
         if (userId == targetUserId) {
             throw new ForbiddenException('Самолайк залог успеха, но Вы не можете оценивать сами себя');
         }
 
-        // Can't rate target user twice
+        // Can't rate target user twice.
         if(await this.isVotedForUser(userId, targetUserId)) {
             throw new ForbiddenException('Вы уже оценивали этого пользователя');
         }
@@ -55,7 +65,7 @@ export class SocialRatingService {
         // Decrease user's votes count (throw error if not enough votes)
         await this.userService.changeVotesCount(userId, -1);
 
-        // Increase target user's likes count
+        // Increase target user's likes count.
         await this.userModel.updateOne(
             { uid: targetUserId },
             {
@@ -66,10 +76,11 @@ export class SocialRatingService {
             }
         ).exec();
 
-        // Mark that user has voted for this target user
-        this.hasVotedFor(userId, targetUserId);
+        // Mark that user has voted for this target user.
+        await this.hasVotedFor(userId, targetUserId);
 
-        return 0;
+        // Return the next user in the feed.
+        return this.feedService.getNextUser(userId);
     }
 
     async hate(userId: string, targetUserId: string) {
@@ -77,15 +88,15 @@ export class SocialRatingService {
             throw new ForbiddenException('Не нужно оценивать себя негативно, Вы прекрасны');
         }
 
-        // Can't rate target user twice
+        // Can't rate target user twice.
         if(await this.isVotedForUser(userId, targetUserId)) {
             throw new ForbiddenException('Вы уже оценивали этого пользователя');
         }
 
-        // Decrease user's votes count (throw error if not enough votes)
+        // Decrease user's votes count (throw error if not enough votes).
         await this.userService.changeVotesCount(userId, -1);
 
-        // Increase target user's hates count
+        // Increase target user's hates count.
         await this.userModel.updateOne(
             { uid: targetUserId },
             {
@@ -96,10 +107,11 @@ export class SocialRatingService {
             }
         ).exec();
 
-        // Mark that user has voted for this target user
-        this.hasVotedFor(userId, targetUserId);
+        // Mark that user has voted for this target user.
+        await this.hasVotedFor(userId, targetUserId);
 
-        return 0;
+        // Return the next user in the feed.
+        return this.feedService.getNextUser(userId);
     }
 
     async ignore(userId: string, targetUserId: string) {
@@ -107,12 +119,12 @@ export class SocialRatingService {
             throw new ForbiddenException('Вы не можете игнорировать сами себя');
         }
 
-        // Can't rate target user twice
+        // Can't rate target user twice.
         if(await this.isVotedForUser(userId, targetUserId)) {
             throw new ForbiddenException('Вы уже оценивали этого пользователя');
         }
 
-        // Increase target user's ignores count
+        // Increase target user's ignores count.
         await this.userModel.updateOne(
             { uid: targetUserId },
             {
@@ -122,9 +134,10 @@ export class SocialRatingService {
             }
         ).exec();
 
-        // Mark that user has voted for this target user
-        this.hasVotedFor(userId, targetUserId);
+        // Mark that user has voted for this target user.
+        await this.hasVotedFor(userId, targetUserId);
 
-        return 0;
+        // Return the next user in the feed.
+        return this.feedService.getNextUser(userId);
     }
 }
