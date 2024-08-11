@@ -12,6 +12,7 @@ import { UserModule } from '@/user/user.module';
 import { ReferralSystemModule } from '@/referral-system/referral-system.module';
 import { AuthModule } from '@/auth/auth.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
+import { FeedModule } from './feed/feed.module';
 
 @Module({
     imports: [
@@ -31,6 +32,7 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module';
         ReferralSystemModule,
         AuthModule,
         LeaderboardModule,
+        FeedModule,
     ],
     controllers: [
         AppController
