@@ -1,8 +1,8 @@
 ### POST User Data
 # POST http://localhost:3000/api/v1/auth/register
 # GET http://localhost:3000/api/v1/referral-system/261429253
-# POST http://localhost:3000/api/v1/social-rating/261429255/like
- GET http://localhost:3000/api/v1/feed/next
+ POST http://localhost:3000/api/v1/social-rating/261429255/like
+# GET http://localhost:3000/api/v1/feed/next
 Content-Type: application/json;charset=utf-8
 Authorization: https://user548334196-t2xoaz4h.wormhole.vk-apps.com/?vk_access_token_settings=&vk_app_id=7444136&vk_are_notifications_enabled=0&vk_is_app_user=0&vk_is_favorite=0&vk_language=ru&vk_platform=desktop_web&vk_ref=other&vk_ts=1722966536&vk_user_id=261429253&sign=6kT95uW1fDqvFCKfZFWjWCG7YdN1z7V7zdNoBJzGrws
 

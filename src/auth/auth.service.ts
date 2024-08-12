@@ -23,7 +23,6 @@ export class AuthService {
      * @param userDto
      */
     async createUser(userDto: CreateUserDto): Promise<{
-        status: number;
         votes: number;
         social_rating: {
             total: number;
@@ -59,7 +58,6 @@ export class AuthService {
         }
 
         return {
-            status: 201,
             votes: user.votes,
             social_rating: user.social_rating,
             uid: user.uid,
