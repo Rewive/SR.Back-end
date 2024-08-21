@@ -10,7 +10,7 @@ import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetVkUserId } from '@/user/decorator';
 
 @Controller('users')
-// @UseGuards(SignatureGuard)
+@UseGuards(SignatureGuard)
 @ApiTags('Users')
 export class UserController {
     constructor(private readonly userService: UserService) {
