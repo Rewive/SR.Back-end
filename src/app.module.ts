@@ -13,12 +13,14 @@ import { ReferralSystemModule } from '@/referral-system/referral-system.module';
 import { AuthModule } from '@/auth/auth.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
 import { FeedModule } from './feed/feed.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
         }),
+        ScheduleModule.forRoot(),
         MongooseModule.forRoot(process.env.MONGODB_URL),
         MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
         ThrottlerModule.forRoot([{

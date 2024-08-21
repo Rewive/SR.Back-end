@@ -1,10 +1,12 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { SocialRatingService } from './social-rating.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetVkUserId } from '@/user/decorator';
+import { SignatureGuard } from '@/guards';
 
 @Controller('social-rating')
 @ApiTags('Social Rating')
+@UseGuards(SignatureGuard)
 export class SocialRatingController {
     constructor(
         private readonly socialRatingService: SocialRatingService,) {

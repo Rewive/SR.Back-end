@@ -5,15 +5,18 @@ import { UserModule } from '@/user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@/schemas';
 import { FeedModule } from '@/feed/feed.module';
+import { SignatureStrategy } from '@/common';
 
 @Module({
     imports: [
         UserModule,
         FeedModule,
-        MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
+        MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     ],
     controllers: [SocialRatingController],
-    providers: [SocialRatingService],
+    providers: [
+        SocialRatingService, 
+        SignatureStrategy,
+    ],
 })
-export class SocialRatingModule {
-}
+export class SocialRatingModule {}

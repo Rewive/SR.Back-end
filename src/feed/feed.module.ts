@@ -4,6 +4,7 @@ import { FeedController } from './feed.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@/schemas';
 import { UserModule } from '@/user/user.module';
+import { SignatureStrategy } from '@/common';
 
 @Module({
     imports: [
@@ -11,8 +12,11 @@ import { UserModule } from '@/user/user.module';
         MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
     ],
     controllers: [FeedController],
-    providers  : [FeedService],
-    exports: [FeedService],
+    providers  : [
+        FeedService, 
+        SignatureStrategy,
+    ],
+    exports: [FeedService,],
 })
 export class FeedModule {
 }
