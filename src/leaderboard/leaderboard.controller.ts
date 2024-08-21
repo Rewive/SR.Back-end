@@ -1,17 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { LeaderboardService } from './leaderboard.service';
+import { LeaderboardService, SimplifiedUser } from './leaderboard.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SignatureGuard } from '@/guards';
-
-interface SimplifiedUser {
-    uid: string;
-    first_name: string;
-    last_name: string;
-    social_rating: {
-        total: number;
-    };
-    photo_max_orig: string;
-}
 
 @Controller('leaderboard')
 @ApiTags('Leaderboard')

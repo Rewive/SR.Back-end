@@ -1,10 +1,12 @@
-import { BadRequestException, Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '@/dto';
 import { HttpStatusCode } from 'axios';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { SignatureGuard } from '@/guards';
 
 @Controller('auth')
+@UseGuards(SignatureGuard)
 @ApiTags('Auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {
