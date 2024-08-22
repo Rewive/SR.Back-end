@@ -16,7 +16,7 @@ export interface SimplifiedUser {
 
 @Injectable()
 export class LeaderboardService {
-    private select = 'uid first_name last_name social_rating photo_max_orig photo_100';
+    private select = 'uid first_name last_name social_rating photo_max_orig photo_100 hasWon';
 
     constructor(
         @InjectModel(User.name) private userModel: Model<User>,
