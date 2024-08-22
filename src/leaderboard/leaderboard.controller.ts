@@ -9,7 +9,7 @@ import { SignatureGuard } from '@/guards';
 export class LeaderboardController {
     constructor(private readonly leaderboardService: LeaderboardService) {}
 
-    @Get('hall-of-fare')
+    @Get('hall-of-fame')
     @ApiOperation({ summary: 'Return users with hasWon: true sorted by total rating' })
     async getGlory(): Promise<SimplifiedUser[]> {
         return await this.leaderboardService.getGlory();
