@@ -20,15 +20,16 @@ export class FeedService {
                 $match: {
                     uid: {
                         $nin: [
-                            ...user.voted_for, // Skip already rated users
+                            // TODO REMOVE COMMENT
+                            // ...user.voted_for, // Skip already rated users
                             user.uid           // Don't show yourself in the feed
                         ]
                     }
                 }
             },
             { $sample: { size: 1 } }, // Get random user
-        ]);
+        ]).exec();
 
-        return randomUser;
+        return randomUser[0];
     }
 }
