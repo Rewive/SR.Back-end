@@ -33,7 +33,6 @@ export class SignatureStrategy {
                     return acc + (idx === 0 ? '' : '&') + `${key}=${encodeURIComponent(value)}`;
                 }, '');
 
-
             // Hash query string
             const paramsHash = crypto
                 .createHmac('sha256', process.env.VK_SECRET_KEY)

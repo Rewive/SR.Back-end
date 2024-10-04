@@ -57,10 +57,11 @@ export class SocialRatingService {
             throw new ForbiddenException('Самолайк залог успеха, но Вы не можете оценивать сами себя');
         }
 
+        // TODO REMOVE COMMENT
         // Can't rate target user twice.
-        if(await this.isVotedForUser(userId, targetUserId)) {
-            throw new ForbiddenException('Вы уже оценивали этого пользователя');
-        }
+        // if(await this.isVotedForUser(userId, targetUserId)) {
+        //     throw new ForbiddenException('Вы уже оценивали этого пользователя');
+        // }
 
         // Decrease user's votes count (throw error if not enough votes)
         await this.userService.changeVotesCount(userId, -1);
@@ -89,9 +90,10 @@ export class SocialRatingService {
         }
 
         // Can't rate target user twice.
-        if(await this.isVotedForUser(userId, targetUserId)) {
-            throw new ForbiddenException('Вы уже оценивали этого пользователя');
-        }
+        // TODO REMOVE COMMENT
+        // if(await this.isVotedForUser(userId, targetUserId)) {
+        //     throw new ForbiddenException('Вы уже оценивали этого пользователя');
+        // }
 
         // Decrease user's votes count (throw error if not enough votes).
         await this.userService.changeVotesCount(userId, -1);

@@ -34,6 +34,9 @@ export class User extends Document {
     @Prop()
     last_name: string;
 
+    @Prop({default: false})
+    hasWon: boolean;
+
     // Votes
     @Prop({default: 10})
     votes: number;
