@@ -28,7 +28,7 @@ export class LeaderboardService {
             .find()
             .where('show_in_leaderboard', true)      // Don't show users that prefer to hide
             .where('hasWon', false)                  // Exclude users who have won
-            .sort({ 'social_rating.total': -1 })     // Sort by total rating
+            .sort({ 'social_rating.total': -1 }) // Sort by total rating
             .limit(limit)
             .select(this.select)
             .exec();

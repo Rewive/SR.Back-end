@@ -46,6 +46,7 @@ export class AuthService {
                     hates_count: 0,
                 },
                 votes: 0,
+                hasWon: false
             });
 
             await user.save();
