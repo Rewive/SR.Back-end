@@ -43,6 +43,7 @@ export class SignatureStrategy {
                 .replace(/\//g, '_')
                 .replace(/=$/, '');
 
+            console.log({paramsHash, sign});
             // Compare the hash
             return paramsHash === sign;
         } catch {
