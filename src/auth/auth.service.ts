@@ -5,6 +5,7 @@ import { User } from '@/schemas';
 import { Model } from 'mongoose';
 import { CreateUserDto } from '@/dto';
 import { UserService } from '@/user/user.service';
+import { rewardsConfig } from '@/config/rewards';
 
 @Injectable()
 export class AuthService {
@@ -45,7 +46,7 @@ export class AuthService {
                     ignores_count: 0,
                     hates_count: 0,
                 },
-                votes: 0,
+                votes: rewardsConfig.defaultVotesCount,
                 hasWon: false
             });
 
